@@ -1,4 +1,4 @@
-package com.ibm.wala.mobile.test;
+package com.ibm.wala.mobile.test.droidbench;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;

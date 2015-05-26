@@ -1,6 +1,6 @@
 package com.ibm.wala.mobile;
 
-import static com.ibm.wala.mobile.Libraries.systemLibs;
+import static com.ibm.wala.mobile.Libraries.*;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -27,7 +27,8 @@ import com.ibm.wala.util.graph.impl.SlowSparseNumberedGraph;
 
 public class CallGraphService extends Service {
 
-	public static final int CALL_GRAPH = IBinder.FIRST_CALL_TRANSACTION;
+	public static final int APK_CALL_GRAPH = IBinder.FIRST_CALL_TRANSACTION;
+	public static final int MAIN_CALL_GRAPH = APK_CALL_GRAPH + 1;
 	
 	private static String WALA_INTERFACE = "WALA";
 	
@@ -99,8 +100,17 @@ public class CallGraphService extends Service {
 			public boolean transact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
 				try {
 					data.setDataPosition(0);
-					String apkFile = data.readString();
-					Pair<CallGraph,PointerAnalysis<InstanceKey>> x = DalvikCallGraphTestBase.makeAPKCallGraph(systemLibs(), null, apkFile, new NullProgressMonitor(), ReflectionOptions.ONE_FLOW_TO_CASTS_APPLICATION_GET_METHOD);
+					String programFile = data.readString();
+					
+					Pair<CallGraph,PointerAnalysis<InstanceKey>> x;
+					if (code == APK_CALL_GRAPH) {
+						x = DalvikCallGraphTestBase.makeAPKCallGraph(systemLibs(), null, programFile, new NullProgressMonitor(), ReflectionOptions.ONE_FLOW_TO_CASTS_APPLICATION_GET_METHOD);
+					
+					} else {
+						String mainClassName = data.readString();
+						x = DalvikCallGraphTestBase.makeDalvikCallGraph(coreLibs(), null, mainClassName, programFile);
+					}
+					
 					reply.writeSerializable(writeable(x.fst));
 					return true;
 				} catch (ClassHierarchyException | 

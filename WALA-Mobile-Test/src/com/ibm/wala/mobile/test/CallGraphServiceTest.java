@@ -1,12 +1,13 @@
 package com.ibm.wala.mobile.test;
 
-import org.junit.Test;
-
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteException;
 import android.test.ServiceTestCase;
+import android.test.suitebuilder.annotation.MediumTest;
+import android.test.suitebuilder.annotation.SmallTest;
+import android.util.Log;
 
 import com.ibm.wala.mobile.CallGraphService;
 import com.ibm.wala.util.collections.Pair;
@@ -24,20 +25,20 @@ public class CallGraphServiceTest extends ServiceTestCase<CallGraphService> {
 		return intent;
 	}
 
-	@Test  
+	@SmallTest  
 	public void testStartable() {  
 		Intent startIntent = makeIntent();  
 		startService(startIntent);  
 	}
 
-	@Test  
+	@SmallTest  
 	public void testBindable() {  
 		Intent startIntent = makeIntent();  
 		IBinder service = bindService(startIntent); 
 		assert service != null;
 	}  
 
-	@Test  
+	@MediumTest  
 	public void testCallGraph() throws RemoteException {  
 		Intent startIntent = makeIntent();  
 		IBinder service = bindService(startIntent); 
@@ -45,12 +46,18 @@ public class CallGraphServiceTest extends ServiceTestCase<CallGraphService> {
 		Parcel callData = Parcel.obtain();
 		Parcel returnData = Parcel.obtain();
 		
-		callData.writeString("/system/app/Browser/Browser.apk");
-		service.transact(CallGraphService.CALL_GRAPH, callData, returnData, 0);
+		String app = "/data/test/com.ibm.wala.core.testdata_1.0.0a.dex";
+		
+		callData.writeString(app);
+		callData.writeString("LdynamicCG/MainClass");
+		service.transact(CallGraphService.MAIN_CALL_GRAPH, callData, returnData, 0);
 
+		returnData.setDataPosition(0);
 		@SuppressWarnings("unchecked")
 		SlowSparseNumberedGraph<Pair<String,Integer>> CG = (SlowSparseNumberedGraph<Pair<String, Integer>>) returnData.readSerializable();
 		
+		Log.i("CallGraphServiceTest", CG.toString());
+
 		callData.recycle();
 		returnData.recycle();
 		

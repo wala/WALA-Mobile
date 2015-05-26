@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import junit.framework.Assert;
 import android.test.AndroidTestCase;
+import android.test.suitebuilder.annotation.SmallTest;
 import android.util.Log;
 
 import com.ibm.wala.core.tests.ir.AnnotationTest;
@@ -52,6 +53,7 @@ public class AndroidAnnotationTest extends AndroidTestCase {
 	 * @throws Exception
 	 * @see com.ibm.wala.core.tests.ir.AnnotationTest#testClassAnnotations1()
 	 */
+	@SmallTest
 	public void testClassAnnotations1() throws Exception {
 		multipleInheritence.testClassAnnotations1();
 	}
@@ -60,6 +62,7 @@ public class AndroidAnnotationTest extends AndroidTestCase {
 	 * @throws Exception
 	 * @see com.ibm.wala.core.tests.ir.AnnotationTest#testClassAnnotations2()
 	 */
+	@SmallTest
 	public void testClassAnnotations2() throws Exception {
 		multipleInheritence.testClassAnnotations2();
 	}
@@ -68,6 +71,7 @@ public class AndroidAnnotationTest extends AndroidTestCase {
 	 * @throws Exception
 	 * @see com.ibm.wala.core.tests.ir.AnnotationTest#testClassAnnotations3()
 	 */
+	@SmallTest
 	public void testClassAnnotations3() throws Exception {
 		multipleInheritence.testClassAnnotations3();
 	}
@@ -76,6 +80,7 @@ public class AndroidAnnotationTest extends AndroidTestCase {
 	 * @throws Exception
 	 * @see com.ibm.wala.core.tests.ir.AnnotationTest#testClassAnnotations4()
 	 */
+	@SmallTest
 	public void testClassAnnotations4() throws Exception {
 		multipleInheritence.testClassAnnotations4();
 	}
@@ -84,9 +89,9 @@ public class AndroidAnnotationTest extends AndroidTestCase {
 	 * @throws Exception
 	 * @see com.ibm.wala.core.tests.ir.AnnotationTest#testParamAnnotations1()
 	 */
+	@SmallTest
 	public void testParamAnnotations1() throws Exception {
 		multipleInheritence.testParamAnnotations1();
 	}
-	
-	
+		
 }
