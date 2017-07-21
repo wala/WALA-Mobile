@@ -12,6 +12,7 @@ import android.os.IBinder;
 import android.os.IInterface;
 import android.os.Parcel;
 import android.os.RemoteException;
+import android.support.annotation.NonNull;
 
 import com.ibm.wala.dalvik.test.callGraph.DalvikCallGraphTestBase;
 import com.ibm.wala.ipa.callgraph.AnalysisOptions.ReflectionOptions;
@@ -31,23 +32,24 @@ public class CallGraphService extends Service {
 	public static final int MAIN_CALL_GRAPH = APK_CALL_GRAPH + 1;
 	
 	private static String WALA_INTERFACE = "WALA";
-	
+
+	@NonNull
 	private Pair<String,Integer> node(CGNode n) {
 		return Pair.make("" + n.getMethod().getName() + n.getMethod().getDescriptor(), n.getGraphNodeId());
 	}
 	
 	private SlowSparseNumberedGraph<Pair<String,Integer>> writeable(CallGraph CG) {
 		SlowSparseNumberedGraph<Pair<String,Integer>> result = SlowSparseNumberedGraph.make();
-		
-		for(CGNode n : CG) {
-			result.addNode(node(n));
-		}
 
-		for(CGNode n : CG) {
+		CG.forEach((CGNode n) -> {
+			result.addNode(node(n));
+		});
+
+		CG.forEach((CGNode n) -> {
 			for(Iterator<CGNode> ss = CG.getSuccNodes(n); ss.hasNext(); ) {
 				result.addEdge(node(n), node(ss.next()));
 			}
-		}
+		});
 		
 		return result;
 	}
