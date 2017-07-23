@@ -1,0 +1,18 @@
+language: android
+  components:
+    - tools
+    - platform-tools
+    - tools
+    - build-tools-26.0.0
+    - android-26
+    - sys-img-x86_64-android-25
+jdk: oraclejdk8
+before_install:
+ - git clone --depth=50 https://github.com/wala/WALA /tmp/WALA
+install:
+ - pushd /tmp/WALA
+ - mvn clean install -DskipTests -B -q
+ - popd
+cache:
+  directories:
+    - $HOME/.m2
