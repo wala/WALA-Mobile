@@ -5,7 +5,7 @@ android {
     buildToolsVersion "26.0.0"
     defaultConfig {
         applicationId "com.ibm.wala.mobile"
-        minSdkVersion 25
+        minSdkVersion 22
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -21,26 +21,27 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
     packagingOptions {
         exclude 'plugin.properties'
-	exclude 'OSGI-INF/**'
+        exclude 'OSGI-INF/**'
+        exclude 'c/**'
+        exclude 'libcast/**'
+        exclude 'libcast.a'
+        exclude 'libcast.jnilib'
     }
-
     dexOptions {
     }
-    
     splits {
         abi {
             enable true
             reset()
-            include 'x86'
             universalApk true
         }
     }
-
     lintOptions {
-    	abortOnError false
+        abortOnError false
+    }
+    productFlavors {
     }
 }
 
