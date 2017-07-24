@@ -9,6 +9,7 @@ android:
     - build-tools-26.0.0
     - android-26
     - android-22
+    - sys-img-x86_64-android-22
 jdk: oraclejdk8
 cache:
   directories:
