@@ -44,7 +44,6 @@ public class CallGraphServiceTest extends ServiceTestCase<CallGraphService> {
 		Assert.assertNotNull(service);
 	}  
 
-	/* get the libraries story straight, and enable this
 	@Test
 	public void testCallGraph() throws RemoteException, IOException {
 		Intent startIntent = makeIntent();  
@@ -54,12 +53,17 @@ public class CallGraphServiceTest extends ServiceTestCase<CallGraphService> {
 		Parcel returnData = Parcel.obtain();
 		
 		String appName = "com.ibm.wala.core.testdata_1.0.0a.dex";
-		File app = new File(getContext().getDataDir(), "testdata.dex");
+		File app = new File(System.getProperty("java.io.tmpdir"), "testdata.dex");
 		TemporaryFile.streamToFile(app, InstrumentationRegistry.getContext().getAssets().open(appName));
+
+		String libName = "core.dex";
+		File lib = new File(System.getProperty("java.io.tmpdir"), "core.dex");
+		TemporaryFile.streamToFile(lib, InstrumentationRegistry.getTargetContext().getAssets().open(libName));
 
 		callData.writeString(app.getAbsolutePath());
 		callData.writeString("LdynamicCG/MainClass");
-		service.transact(CallGraphService.MAIN_CALL_GRAPH, callData, returnData, 0);
+		callData.writeString(lib.getAbsolutePath());
+		service.transact(CallGraphService.JAVA_CALL_GRAPH, callData, returnData, 0);
 
 		returnData.setDataPosition(0);
 		@SuppressWarnings("unchecked")
@@ -72,5 +76,5 @@ public class CallGraphServiceTest extends ServiceTestCase<CallGraphService> {
 		
 		assert CG != null;
 	}  
-    */
+
 }

@@ -2,12 +2,16 @@ package com.ibm.wala.mobile;
 
 import static com.ibm.wala.mobile.Libraries.*;
 
+import java.io.File;
 import java.io.FileDescriptor;
 import java.io.IOException;
+import java.net.URI;
 import java.util.Iterator;
 
+import android.app.Activity;
 import android.app.Service;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.os.IBinder;
 import android.os.IInterface;
 import android.os.Parcel;
@@ -30,6 +34,7 @@ public class CallGraphService extends Service {
 
 	public static final int APK_CALL_GRAPH = IBinder.FIRST_CALL_TRANSACTION;
 	public static final int MAIN_CALL_GRAPH = APK_CALL_GRAPH + 1;
+	public static final int JAVA_CALL_GRAPH = MAIN_CALL_GRAPH + 1;
 	
 	private static String WALA_INTERFACE = "WALA";
 
@@ -38,7 +43,7 @@ public class CallGraphService extends Service {
 		return Pair.make("" + n.getMethod().getName() + n.getMethod().getDescriptor(), n.getGraphNodeId());
 	}
 	
-	private SlowSparseNumberedGraph<Pair<String,Integer>> writeable(CallGraph CG) {
+	private SlowSparseNumberedGraph<Pair<String,Integer>> writable(CallGraph CG) {
 		SlowSparseNumberedGraph<Pair<String,Integer>> result = SlowSparseNumberedGraph.make();
 
 		CG.forEach((CGNode n) -> {
@@ -106,12 +111,18 @@ public class CallGraphService extends Service {
 				if (code == APK_CALL_GRAPH) {
 					x = DalvikCallGraphTestBase.makeAPKCallGraph(systemLibs(), null, programFile, new NullProgressMonitor(), ReflectionOptions.ONE_FLOW_TO_CASTS_APPLICATION_GET_METHOD);
 
-				} else {
+				} else if (code == MAIN_CALL_GRAPH){
 					String mainClassName = data.readString();
 					x = DalvikCallGraphTestBase.makeDalvikCallGraph(coreLibs(), null, mainClassName, programFile);
+				} else {
+					assert code == JAVA_CALL_GRAPH;
+					String mainClassName = data.readString();
+					String libraryFile = data.readString();
+
+					x = DalvikCallGraphTestBase.makeDalvikCallGraph(new URI[]{ new File(libraryFile).toURI() }, null, mainClassName, programFile);
 				}
 
-				reply.writeSerializable(writeable(x.fst));
+				reply.writeSerializable(writable(x.fst));
 				return true;
 			} catch (ClassHierarchyException |
 					IllegalArgumentException |
