@@ -56,14 +56,10 @@ public class CallGraphServiceTest extends ServiceTestCase<CallGraphService> {
 		File app = new File(System.getProperty("java.io.tmpdir"), "testdata.dex");
 		TemporaryFile.streamToFile(app, InstrumentationRegistry.getContext().getAssets().open(appName));
 
-		String libName = "core.dex";
-		File lib = new File(System.getProperty("java.io.tmpdir"), "core.dex");
-		TemporaryFile.streamToFile(lib, InstrumentationRegistry.getTargetContext().getAssets().open(libName));
-
 		callData.writeString(app.getAbsolutePath());
 		callData.writeString("LdynamicCG/MainClass");
-		callData.writeString(lib.getAbsolutePath());
-		service.transact(CallGraphService.JAVA_CALL_GRAPH, callData, returnData, 0);
+
+		service.transact(CallGraphService.MAIN_CALL_GRAPH, callData, returnData, 0);
 
 		returnData.setDataPosition(0);
 		@SuppressWarnings("unchecked")

@@ -24,35 +24,22 @@ public class Libraries {
 
 	public static URI[] systemLibs() {
 		List<URI> libs = new ArrayList<URI>();
-		for(File f : new File("/system/framework/").listFiles(new FileFilter() {
-			@Override
-			public boolean accept(File pathname) {
+		for (String dir : new String[]{"arm", "x86_64", "x86"}) {
+			File[] fs = new File("/system/framework/" + dir + "/").listFiles((File pathname) -> {
 				String name = pathname.getName();
-				return 
-					(name.startsWith("core") || name.startsWith("framework")) && 
-					(name.endsWith("jar") || name.endsWith("apk"));
-			} 
-		})) 
-		{
-			System.out.println("adding " + f);
-			libs.add(f.toURI());
-		}
-		return libs.toArray(new URI[ libs.size() ]);
-	}
+				return name.equals("boot.oat") || name.equals("boot-core-libart.oat");
+			});
+			if (fs != null) {
+				for (File f : fs) {
+					System.out.println("adding " + f);
+					libs.add(f.toURI());
+				}
 
-	public static URI[] coreLibs() {
-		List<URI> libs = new ArrayList<URI>();
-		for(File f : new File("/system/framework/").listFiles(new FileFilter() {
-			@Override
-			public boolean accept(File pathname) {
-				String name = pathname.getName();
-				return (name.contains("core") || name.contains("framework")) && name.endsWith(".jar");
-			} 
-		})) 
-		{
-			System.out.println("adding " + f);
-			libs.add(f.toURI());
+				return libs.toArray(new URI[libs.size()]);
+			}
 		}
-		return libs.toArray(new URI[ libs.size() ]);
+
+		assert false;
+		return null;
 	}
 }

@@ -113,7 +113,7 @@ public class CallGraphService extends Service {
 
 				} else if (code == MAIN_CALL_GRAPH){
 					String mainClassName = data.readString();
-					x = DalvikCallGraphTestBase.makeDalvikCallGraph(coreLibs(), null, mainClassName, programFile);
+					x = DalvikCallGraphTestBase.makeDalvikCallGraph(systemLibs(), null, mainClassName, programFile);
 				} else {
 					assert code == JAVA_CALL_GRAPH;
 					String mainClassName = data.readString();
