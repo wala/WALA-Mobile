@@ -1,5 +1,8 @@
 package com.ibm.wala.mobile;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
@@ -10,7 +13,8 @@ import java.util.List;
 
 public class Libraries {
 
-	public static URI[] analysisLibs() throws IOException, URISyntaxException { 
+	@NonNull
+	public static URI[] analysisLibs() throws IOException, URISyntaxException {
 		List<URI> result = new ArrayList<URI>();
 		String libPath = "/data/WALA/stdlibs/" + android.os.Build.VERSION.RELEASE;
 		System.err.println(libPath);
@@ -22,6 +26,7 @@ public class Libraries {
 		return result.toArray(new URI[ result.size() ]);
 	}
 
+	@Nullable
 	public static URI[] systemLibs() {
 		List<URI> libs = new ArrayList<URI>();
 		for (String dir : new String[]{"arm", "x86_64", "x86"}) {
