@@ -62,7 +62,7 @@ public class CallGraphService extends Service {
 	public class Binder implements IBinder {
 
 		@Override
-		public String getInterfaceDescriptor() throws RemoteException {
+		public String getInterfaceDescriptor() {
 			return WALA_INTERFACE;
 		}
 
@@ -114,6 +114,7 @@ public class CallGraphService extends Service {
 				} else if (code == MAIN_CALL_GRAPH){
 					String mainClassName = data.readString();
 					x = DalvikCallGraphTestBase.makeDalvikCallGraph(systemLibs(), null, mainClassName, programFile);
+
 				} else {
 					assert code == JAVA_CALL_GRAPH;
 					String mainClassName = data.readString();
