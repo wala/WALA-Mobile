@@ -7,7 +7,6 @@ android:
     - extra-google-m2repository
     - extra-android-m2repository
     - build-tools-26.0.2
-    - android-26
     - android-24
     - sys-img-armeabi-v7a-android-24
 jdk: oraclejdk8
@@ -16,6 +15,7 @@ cache:
     - $HOME/.m2
     - $HOME/.gradle
 before_install:
+ - yes | sdkmanager "platforms;android-27" "build-tools;27.0.3"
  - echo no | android create avd --force -n WalaTester -t android-24 --abi armeabi-v7a
  - emulator -avd WalaTester -no-window &
  - git clone --depth=50 https://github.com/wala/WALA /tmp/WALA
