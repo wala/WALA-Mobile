@@ -65,5 +65,5 @@ dependencies {
     implementation 'com.ibm.wala:com.ibm.wala.dalvik:1.5.1-SNAPSHOT'
     implementation 'com.ibm.wala:com.ibm.wala.dalvik.test:1.5.1-SNAPSHOT'
     implementation 'com.google.code.findbugs:jsr305:2.0.1'
-    implementation 'org.smali:dexlib2:2.2.1'
+    implementation 'org.smali:dexlib2:2.2.4'
 }
