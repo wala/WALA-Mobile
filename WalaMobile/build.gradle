@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.ibm.wala.mobile"
         minSdkVersion 24
@@ -57,13 +57,13 @@ dependencies {
     })
     implementation 'com.android.support:appcompat-v7:26.0.0-beta2'
     testImplementation 'junit:junit:4.12'
-    implementation 'com.ibm.wala:com.ibm.wala.util:1.5.1-SNAPSHOT'
-    implementation 'com.ibm.wala:com.ibm.wala.shrike:1.5.1-SNAPSHOT'
-    implementation 'com.ibm.wala:com.ibm.wala.core:1.5.1-SNAPSHOT'
-    implementation 'com.ibm.wala:com.ibm.wala.cast:1.5.1-SNAPSHOT'
-    implementation 'com.ibm.wala:com.ibm.wala.core.tests:1.5.1-SNAPSHOT'
-    implementation 'com.ibm.wala:com.ibm.wala.dalvik:1.5.1-SNAPSHOT'
-    implementation 'com.ibm.wala:com.ibm.wala.dalvik.test:1.5.1-SNAPSHOT'
+    implementation 'com.ibm.wala:com.ibm.wala.util:1.5.3-SNAPSHOT'
+    implementation 'com.ibm.wala:com.ibm.wala.shrike:1.5.3-SNAPSHOT'
+    implementation 'com.ibm.wala:com.ibm.wala.core:1.5.3-SNAPSHOT'
+    implementation 'com.ibm.wala:com.ibm.wala.cast:1.5.3-SNAPSHOT'
+    implementation 'com.ibm.wala:com.ibm.wala.core.tests:1.5.3-SNAPSHOT'
+    implementation 'com.ibm.wala:com.ibm.wala.dalvik:1.5.3-SNAPSHOT'
+    implementation 'com.ibm.wala:com.ibm.wala.dalvik.test:1.5.3-SNAPSHOT'
     implementation 'com.google.code.findbugs:jsr305:2.0.1'
     implementation 'org.smali:dexlib2:2.2.4'
 }
